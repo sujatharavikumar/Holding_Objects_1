@@ -1,52 +1,69 @@
 package Ravikumar.Sujatha.HoldingObjects;
 
-import java.math.BigInteger;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Set;
+import java.util.ArrayList;
 
 /**
  * Created by sujatharavikumar on 9/28/16.
  */
 public class PhoneBook {
 
-    public Map<String, String> phoneMap = new TreeMap<String, String>();
+    public Map<String,ArrayList<String>> multiplePhoneNumbersMap = new TreeMap<String, ArrayList<String>>();
 
-    public String lookUp(String key){
-        return phoneMap.get(key);
+
+    public void addContact(String key, String value){
+
+        ArrayList<String> listOfPhoneNumbers = new ArrayList<String>();
+        listOfPhoneNumbers.add(value);
+        multiplePhoneNumbersMap.put(key, listOfPhoneNumbers);
+
     }
 
-    public void addEntry(String key, String value){
-        phoneMap.put(key,value);
+    public void addAnotherPhoneNumberToExistingContact(String key, String phoneNumber){
+        multiplePhoneNumbersMap.get(key).add(phoneNumber);
     }
 
-    public void removeEntry(String key){
-        phoneMap.remove(key);
-    }
 
-    public void listPhoneBookEntries(){
-        Set set = phoneMap.entrySet();
+    public void listEntriesFromMultiplePhoneNumbersMap(){
+        Set set = multiplePhoneNumbersMap.entrySet();
         Iterator iterator = set.iterator();
+        System.out.println("*************************");
         while(iterator.hasNext()){
-            Map.Entry mapEntry = (Map.Entry)iterator.next();
-            System.out.print("Name: " +mapEntry.getKey()+ "\tPhone Number: ");
-            System.out.println(mapEntry.getValue());
+            Map.Entry<String,ArrayList<String>> mapEntry = (Map.Entry)iterator.next();
+            System.out.println("Name: " +mapEntry.getKey()+ "\nPhone: ");
+            for (int i=0; i<mapEntry.getValue().size(); i++){
+                System.out.println("\t"+mapEntry.getValue().get(i));
+            }
         }
-        System.out.println("*************************************");
+        System.out.println("**************************");
 
     }
 
+
+    public void removeContact(String key){
+        multiplePhoneNumbersMap.remove(key);
+    }
+
+
+    public ArrayList<String> lookUp(String key){
+        return multiplePhoneNumbersMap.get(key);
+    }
 
     public String reverseLookUp(String value){
-        for (Map.Entry entry : phoneMap.entrySet()) {
-            if (entry.getValue().equals(value)) {
-                return (String)entry.getKey();
+        for (Map.Entry<String,ArrayList<String>> entry : multiplePhoneNumbersMap.entrySet()) {
+            for (int i=0; i<entry.getValue().size(); i++){
+                if(entry.getValue().get(i).equals(value))
+                    return (String)entry.getKey();
             }
+
         }
 
         return null;
     }
+
 
 
 }
