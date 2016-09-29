@@ -7,8 +7,10 @@ import java.util.ArrayList;
  */
 public class PhoneBookApplication {
 
+    private PhoneBook phoneBookObject = new PhoneBook();
+
     public void testPhoneBook(){
-        PhoneBook phoneBookObject = new PhoneBook();
+        //PhoneBook phoneBookObject = new PhoneBook();
 
         phoneBookObject.addContact("Sujatha", "3182784690");
         phoneBookObject.addAnotherPhoneNumberToExistingContact("Sujatha", "2346483758");
